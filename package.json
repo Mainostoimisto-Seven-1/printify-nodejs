@@ -1,16 +1,19 @@
 {
     "name": "printify-nodejs",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "Library for calling the Printify API from Node.js written in TypeScript",
-    "main": "index.js",
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
+    "types": "dist/index.d.ts",
     "private": true,
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "build": "tsup src/index.ts  --format cjs,esm --dts",
+        "lint": "tsc"
     },
-    "keywords": [],
-    "author": "",
+    "author": "Veeti Maaninka",
     "license": "ISC",
     "devDependencies": {
+        "@changesets/cli": "^2.26.2",
         "typescript": "^5.1.6"
     }
 }
