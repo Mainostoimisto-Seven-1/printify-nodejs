@@ -7,13 +7,6 @@ A brief description of what this project does and who it's for
 -   [Printify API Documentation](https://developers.printify.com/#overview)
 -   [readme.so](https://readme.so)
 
-## Features
-
--   Light/dark mode toggle
--   Live previews
--   Fullscreen mode
--   Cross platform
-
 ## Installation
 
 Install printify-nodejs with npm
