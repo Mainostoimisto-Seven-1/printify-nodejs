@@ -2,6 +2,7 @@ import {
     GetBlueprintPrintProviderShippingInformationResponse,
     GetBlueprintPrintProviderVariantsResponse,
     GetBlueprintPrintProvidersResponse,
+    GetBlueprintResponse,
     GetBlueprintsResponse,
     GetPrintProviderResponse,
     GetPrintProvidersResponse,
@@ -119,7 +120,7 @@ class PrintifyClient {
     }
 
     async getBlueprintById(blueprintId: number) {
-        const data = await this.callApi<GetBlueprintsResponse>({
+        const data = await this.callApi<GetBlueprintResponse>({
             method: "GET",
             path: `/catalog/blueprints/${blueprintId}.json`,
         });
