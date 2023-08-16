@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 0.4.0
+
+### Minor Changes
+
+- 71fc8bb: image upload endpoints and error handling
+
 ## 0.3.1
 
 ### Patch Changes
