@@ -8,7 +8,11 @@ import {
 } from "./types/catalog";
 import { DisconnectShopResponse, type GetShopsResponse } from "./types/shops";
 import { BASE_URL, VERSION, VERSIONS } from "./constants";
-import { GetAllProductsResponse } from "./types/products";
+import {
+    CreateProductPayload,
+    CreateProductResponse,
+    GetAllProductsResponse,
+} from "./types/products";
 
 export interface PrintifyClientOptions {
     token: string;
@@ -157,6 +161,15 @@ class PrintifyClient {
                 limit: pagination.limit.toString(),
                 page: pagination.page.toString(),
             },
+        });
+        return data;
+    }
+
+    async createProduct(shopId: number, payload: CreateProductPayload) {
+        const data = await this.callApi<CreateProductResponse>({
+            method: "POST",
+            body: payload,
+            path: `/shops/${shopId}/products.json`,
         });
         return data;
     }
