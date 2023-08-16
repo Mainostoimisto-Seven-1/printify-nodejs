@@ -1,13 +1,19 @@
-export const API_URL = "https://api.printify.com/v1";
-
 import { GetBlueprintsResponse } from "./types/catalog";
 import { DisconnectShopResponse, type GetShopsResponse } from "./types/shops";
+import { BASE_URL, VERSION, VERSIONS } from "./constants";
+
+export interface PrintifyClientOptions {
+    token: string;
+    version: VERSION;
+}
 
 class PrintifyClient {
     token: string;
+    API_URL: string;
 
-    constructor(token: string) {
+    constructor({ token, version }: PrintifyClientOptions) {
         this.token = token;
+        this.API_URL = `${BASE_URL}/${version}`;
     }
 
     async callApi<TResponse>(options: {
@@ -16,7 +22,7 @@ class PrintifyClient {
         headers?: HeadersInit;
         body?: Record<string, unknown>;
     }) {
-        const response = await fetch(`${API_URL}${options.path}`, {
+        const response = await fetch(`${this.API_URL}${options.path}`, {
             method: options.method,
             headers: {
                 "User-Agent": "Printify NodeJS Client",
