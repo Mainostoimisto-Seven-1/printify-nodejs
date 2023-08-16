@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 0.3.0
+
+### Minor Changes
+
+- f15cc11: blueprint endpoints, list products endpoint and create product endpoint
+
 ## 0.2.0
 
 ### Minor Changes
