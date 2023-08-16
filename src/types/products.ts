@@ -94,3 +94,5 @@ export type CreateProductPayload = {
 };
 
 export type CreateProductResponse = Product;
+
+export type ArchiveUploadedImageResponse = {};

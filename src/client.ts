@@ -9,14 +9,45 @@ import {
 import { DisconnectShopResponse, type GetShopsResponse } from "./types/shops";
 import { BASE_URL, VERSION, VERSIONS } from "./constants";
 import {
+    ArchiveUploadedImageResponse,
     CreateProductPayload,
     CreateProductResponse,
     GetAllProductsResponse,
 } from "./types/products";
+import { PaginationOptions } from "./types/paginated-response";
+import {
+    GetUploadedImageResponse,
+    GetUploadedImagesResponse,
+    UploadImagePayload,
+    UploadImageResponse,
+} from "./types/uploads";
 
 export interface PrintifyClientOptions {
     token: string;
     version: VERSION;
+}
+
+export class PrintifyError extends Error {
+    response?: Response;
+    status?: number;
+    data?: unknown;
+
+    constructor(message: string) {
+        super(message);
+        this.name = "PrintifyError";
+    }
+
+    static fromResponse(response: Response) {
+        const error = new PrintifyError(response.statusText);
+        error.response = response;
+        error.status = response.status;
+        if (
+            response.headers.get("content-type")?.includes("application/json")
+        ) {
+            error.data = response.json();
+        }
+        return error;
+    }
 }
 
 class PrintifyClient {
@@ -25,7 +56,7 @@ class PrintifyClient {
 
     constructor({ token, version }: PrintifyClientOptions) {
         this.token = token;
-        this.API_URL = `${BASE_URL}/${version}`;
+        this.API_URL = `${BASE_URL}${version}`;
     }
 
     async callApi<TResponse>(options: {
@@ -51,9 +82,16 @@ class PrintifyClient {
             },
             body: options.body ? JSON.stringify(options.body) : undefined,
         });
+
+        if (!response.ok) {
+            throw PrintifyError.fromResponse(response);
+        }
+
         const data = (await response.json()) as unknown as TResponse;
         return data;
     }
+
+    // Shops
 
     async getShops() {
         const data = await this.callApi<GetShopsResponse>({
@@ -71,6 +109,7 @@ class PrintifyClient {
         return data;
     }
 
+    // Catalog
     async getBlueprints() {
         const data = await this.callApi<GetBlueprintsResponse>({
             method: "GET",
@@ -147,6 +186,8 @@ class PrintifyClient {
         return data;
     }
 
+    // Products
+
     async getAllProducts(
         shopId: number,
         pagination: {
@@ -170,6 +211,49 @@ class PrintifyClient {
             method: "POST",
             body: payload,
             path: `/shops/${shopId}/products.json`,
+        });
+        return data;
+    }
+
+    // TODO: Finish product endpoints integration (https://developers.printify.com/#products)
+
+    // Uploads
+    async getImageUploads(
+        pagination: PaginationOptions = { limit: 10, page: 1 }
+    ) {
+        const data = await this.callApi<GetUploadedImagesResponse>({
+            method: "GET",
+            path: `/uploads.json`,
+            searchParams: {
+                limit: pagination.limit.toString(),
+                page: pagination.page.toString(),
+            },
+        });
+        return data;
+    }
+
+    async getImageUploadById(imageId: string) {
+        const data = await this.callApi<GetUploadedImageResponse>({
+            method: "GET",
+            path: `/uploads/${imageId}.json`,
+        });
+        return data;
+    }
+
+    async uploadImage(payload: UploadImagePayload) {
+        const data = await this.callApi<UploadImageResponse>({
+            method: "POST",
+            body: payload,
+            path: `/uploads/images.json`,
+        });
+        return data;
+    }
+
+    async archiveImage(imageId: string) {
+        const data = await this.callApi<ArchiveUploadedImageResponse>({
+            method: "POST",
+            body: {},
+            path: `/uploads/${imageId}/archive.json`,
         });
         return data;
     }

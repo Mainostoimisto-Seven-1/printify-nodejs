@@ -15,3 +15,8 @@ export type PaginatedResponse<TData> = {
     from: number | null;
     to: number | null;
 };
+
+export type PaginationOptions = {
+    limit: number;
+    page: number;
+};
