@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 0.4.2
+
+### Patch Changes
+
+- 5a6741a: fix #getBluepringById return type
+
 ## 0.4.1
 
 ### Patch Changes
