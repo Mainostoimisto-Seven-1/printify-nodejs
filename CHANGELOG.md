@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 0.4.1
+
+### Patch Changes
+
+- 7cdeca1: add type exports
+
 ## 0.4.0
 
 ### Minor Changes
