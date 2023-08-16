@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 0.3.1
+
+### Patch Changes
+
+- e8764da: implement create product endpoint
+
 ## 0.3.0
 
 ### Minor Changes
