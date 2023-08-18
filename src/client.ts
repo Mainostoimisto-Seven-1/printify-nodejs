@@ -14,6 +14,7 @@ import {
     CreateProductPayload,
     CreateProductResponse,
     GetAllProductsResponse,
+    GetProductResponse,
 } from "./types/products";
 import { PaginationOptions } from "./types/paginated-response";
 import {
@@ -203,6 +204,14 @@ class PrintifyClient {
                 limit: pagination.limit.toString(),
                 page: pagination.page.toString(),
             },
+        });
+        return data;
+    }
+
+    async getProductById(shopId: number, productId: string) {
+        const data = await this.callApi<GetProductResponse>({
+            method: "GET",
+            path: `/shops/${shopId}/products/${productId}.json`,
         });
         return data;
     }
