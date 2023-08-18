@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 0.4.3
+
+### Patch Changes
+
+- ec7bb1d: add get product by id endpoint
+
 ## 0.4.2
 
 ### Patch Changes
