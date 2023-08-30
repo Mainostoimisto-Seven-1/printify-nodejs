@@ -1,18 +1,46 @@
 import { PaginatedResponse } from "./paginated-response";
 
+export type ProductOptionBase = {
+    name: string;
+};
+
+export type ColorOption = ProductOptionBase & {
+    type: "color";
+    values: {
+        id: number;
+        title: string;
+        colors: string[];
+    }[];
+};
+
+export type BasicOption = ProductOptionBase & {
+    type: string;
+    values: {
+        id: number;
+        title: string;
+    }[];
+};
+
+export type ProductOption = ColorOption | BasicOption;
+
+const test: ProductOption = {
+    type: "color",
+    name: "Color",
+    values: [
+        {
+            id: 1,
+            title: "red",
+            colors: ["#ff0000"],
+        },
+    ],
+};
+
 type Product = {
     id: string;
     title: string;
     description: string;
     tags: string[];
-    options: {
-        name: string;
-        type: string;
-        values: {
-            id: number;
-            title: string;
-        }[];
-    }[];
+    options: ProductOption[];
     variants: {
         id: number;
         sku: string;
