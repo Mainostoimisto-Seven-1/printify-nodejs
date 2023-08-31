@@ -104,7 +104,6 @@ class PrintifyClient {
                 ? "?" + new URLSearchParams(options.searchParams).toString()
                 : ""
         }`;
-        if (this.debug) console.debug(`printify-nodejs:`, options);
         const response = await fetch(url, {
             method: options.method,
             headers: {
@@ -116,12 +115,16 @@ class PrintifyClient {
             body: options.body ? JSON.stringify(options.body) : undefined,
         });
 
+        let data: TResponse | null = null;
+        let error: PrintifyError | null = null;
         if (!response.ok) {
-            throw PrintifyError.fromResponse(response);
+            error = PrintifyError.fromResponse(response);
+        } else {
+            data = (await response.json()) as unknown as TResponse;
         }
-
-        const data = (await response.json()) as unknown as TResponse;
-        return data;
+        if (this.debug)
+            console.debug(`printify-nodejs:`, { options, data, error });
+        return { data, error };
     }
 
     // Shops
