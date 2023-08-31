@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 2.0.3
+
+### Patch Changes
+
+- a8bb80f: fix typo in orderstatus canceled
+
 ## 2.0.2
 
 ### Patch Changes
