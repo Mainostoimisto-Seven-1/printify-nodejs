@@ -20,7 +20,11 @@ Install printify-nodejs with npm
 ```javascript
 import { PrintifyClient } from "printify-nodejs";
 
-const client = new PrintifyClient("PRINTIFY_API_TOKEN");
+const client = new PrintifyClient({
+    token: "PRINTIFY_API_TOKEN",
+    version: "v1", // API Version
+    debug: false, // Optional, whether to console log debug message from api calls.
+});
 
 const shops = await client.getShops();
 ```

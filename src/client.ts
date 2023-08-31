@@ -55,6 +55,7 @@ import { PrintifyEvent } from "./types/events";
 export interface PrintifyClientOptions {
     token: string;
     version: VERSION;
+    debug?: boolean;
 }
 
 export class PrintifyError extends Error {
@@ -83,10 +84,12 @@ export class PrintifyError extends Error {
 class PrintifyClient {
     token: string;
     API_URL: string;
+    debug = false;
 
-    constructor({ token, version }: PrintifyClientOptions) {
+    constructor({ token, version, debug }: PrintifyClientOptions) {
         this.token = token;
         this.API_URL = `${BASE_URL}${version}`;
+        this.debug = debug ?? false;
     }
 
     async callApi<TResponse>(options: {
@@ -101,7 +104,7 @@ class PrintifyClient {
                 ? "?" + new URLSearchParams(options.searchParams).toString()
                 : ""
         }`;
-        console.debug(`Calling ${url}`);
+        if (this.debug) console.debug(`printify-nodejs:`, options);
         const response = await fetch(url, {
             method: options.method,
             headers: {
