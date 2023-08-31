@@ -23,18 +23,6 @@ export type BasicOption = ProductOptionBase & {
 
 export type ProductOption = ColorOption | BasicOption;
 
-const test: ProductOption = {
-    type: "color",
-    name: "Color",
-    values: [
-        {
-            id: 1,
-            title: "red",
-            colors: ["#ff0000"],
-        },
-    ],
-};
-
 export interface ProductVariant {
     id: number;
     sku?: string;

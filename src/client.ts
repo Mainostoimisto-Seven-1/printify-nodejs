@@ -68,14 +68,14 @@ export class PrintifyError extends Error {
         this.name = "PrintifyError";
     }
 
-    static fromResponse(response: Response) {
+    static async fromResponse(response: Response) {
         const error = new PrintifyError(response.statusText);
         error.response = response;
         error.status = response.status;
         if (
             response.headers.get("content-type")?.includes("application/json")
         ) {
-            error.data = response.json();
+            error.data = await response.json();
         }
         return error;
     }
@@ -118,7 +118,7 @@ class PrintifyClient {
         let data: TResponse | null = null;
         let error: PrintifyError | null = null;
         if (!response.ok) {
-            error = PrintifyError.fromResponse(response);
+            error = await PrintifyError.fromResponse(response);
         } else {
             data = (await response.json()) as unknown as TResponse;
         }
