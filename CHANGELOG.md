@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 1.0.2
+
+### Patch Changes
+
+- 3b42a67: update logging
+
 ## 1.0.1
 
 ### Patch Changes
