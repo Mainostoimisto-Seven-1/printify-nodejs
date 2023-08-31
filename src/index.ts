@@ -8,3 +8,4 @@ export * as Uploads from "./types/uploads";
 export * as Orders from "./types/orders";
 export * as Webhooks from "./types/webhooks";
 export * as Events from "./types/events";
+export * from "./errors";

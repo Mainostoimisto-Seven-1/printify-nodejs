@@ -51,34 +51,12 @@ import {
 
 import crypto from "crypto";
 import { PrintifyEvent } from "./types/events";
+import { PrintifyError } from "./errors";
 
 export interface PrintifyClientOptions {
     token: string;
     version: VERSION;
     debug?: boolean;
-}
-
-export class PrintifyError extends Error {
-    response?: Response;
-    status?: number;
-    data?: unknown;
-
-    constructor(message: string) {
-        super(message);
-        this.name = "PrintifyError";
-    }
-
-    static async fromResponse(response: Response) {
-        const error = new PrintifyError(response.statusText);
-        error.response = response;
-        error.status = response.status;
-        if (
-            response.headers.get("content-type")?.includes("application/json")
-        ) {
-            error.data = await response.json();
-        }
-        return error;
-    }
 }
 
 class PrintifyClient {
@@ -369,7 +347,7 @@ class PrintifyClient {
         const data = await this.callApi<OrderSubmissionResponse>({
             method: "POST",
             body: paylod,
-            path: `/shops/${shopId}/orders/submit.json`,
+            path: `/shops/${shopId}/orders.json`,
         });
         return data;
     }
