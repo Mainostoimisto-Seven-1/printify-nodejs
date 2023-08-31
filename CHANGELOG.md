@@ -1,5 +1,17 @@
 # printify-nodejs
 
+## 1.0.0
+
+### Major Changes
+
+- 33f9d18: Finalized api implementation
+
+  Implemented rest of the product endpoints
+
+  Implemented Order and Webhook endpoints
+
+  Added webhook verification method and webhook event decode method.
+
 ## 0.4.4
 
 ### Patch Changes
