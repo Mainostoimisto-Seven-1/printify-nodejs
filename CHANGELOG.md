@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 2.0.4
+
+### Patch Changes
+
+- 1e4064e: fix shipping calculation endpoint
+
 ## 2.0.3
 
 ### Patch Changes
