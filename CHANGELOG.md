@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 2.0.1
+
+### Patch Changes
+
+- 39256a8: fix error data
+
 ## 2.0.0
 
 ### Major Changes
