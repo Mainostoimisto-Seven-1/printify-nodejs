@@ -42,7 +42,7 @@ export type OrderStatus =
     | "ready-for-production"
     | "sending-to-production"
     | "in-production"
-    | "cancelled"
+    | "canceled"
     | "fulfilled"
     | "partially-fulfilled"
     | "payment-not-received"
