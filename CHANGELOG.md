@@ -1,5 +1,13 @@
 # printify-nodejs
 
+## 2.0.2
+
+### Patch Changes
+
+- 5e9631c: fix order submitting
+
+  move error to another file
+
 ## 2.0.1
 
 ### Patch Changes
