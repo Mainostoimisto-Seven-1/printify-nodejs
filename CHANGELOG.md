@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 1.0.1
+
+### Patch Changes
+
+- 9d35892: fix type exports
+
 ## 1.0.0
 
 ### Major Changes
