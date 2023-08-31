@@ -5,3 +5,6 @@ export * as Paginagtion from "./types/paginated-response";
 export * as Products from "./types/products";
 export * as Shops from "./types/shops";
 export * as Uploads from "./types/uploads";
+export * as Orders from "./types/orders";
+export * as Webhooks from "./types/webhooks";
+export * as Events from "./types/events";
