@@ -368,7 +368,7 @@ class PrintifyClient {
         const data = await this.callApi<CalculateOrderShippingCostResponse>({
             method: "POST",
             body: payload,
-            path: `/shops/${shopId}/orders/calculate_shipping_cost.json`,
+            path: `/shops/${shopId}/orders/shipping.json`,
         });
         return data;
     }
