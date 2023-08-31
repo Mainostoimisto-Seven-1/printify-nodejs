@@ -35,25 +35,27 @@ const test: ProductOption = {
     ],
 };
 
+export interface ProductVariant {
+    id: number;
+    sku?: string;
+    price: number;
+    cost?: number;
+    title?: string;
+    grams?: number;
+    is_enabled?: boolean;
+    is_default?: boolean;
+    is_available?: boolean;
+    is_printify_express_eligible?: boolean;
+    options?: number[];
+}
+
 type Product = {
     id: string;
     title: string;
     description: string;
     tags: string[];
     options: ProductOption[];
-    variants: {
-        id: number;
-        sku: string;
-        cost: number;
-        price: number;
-        title: string;
-        grams: number;
-        is_enabled: boolean;
-        is_default: boolean;
-        is_available: boolean;
-        is_printify_express_eligible: boolean;
-        options: number[];
-    }[];
+    variants: ProductVariant[];
     images: {
         src: string;
         variant_ids: number[];
@@ -63,7 +65,7 @@ type Product = {
     created_at: string;
     updated_at: string;
     visible: boolean;
-    is_locked: false;
+    is_locked: boolean;
     is_printify_express_eligible: boolean;
     blueprint_id: number;
     user_id: number;
@@ -122,5 +124,40 @@ export type CreateProductPayload = {
 };
 
 export type CreateProductResponse = Product;
+
+/**
+ * When updating variants, you must include all variants in the request.
+ * @see https://developers.printify.com/#products
+ */
+export type UpdateProductPayload = Partial<Product>;
+export type UpdateProductResponse = Product;
+
+export type DeleteProductResponse = {};
+
+export type PublishProductPayload = {
+    title: boolean;
+    description: boolean;
+    images: boolean;
+    variants: boolean;
+    tags: boolean;
+    keyFeatures: boolean;
+    shipping_template: boolean;
+};
+export type PublishProductResponse = {};
+
+export type PublishProductSuccessPayload = {
+    external: {
+        id: string;
+        handle: string;
+    };
+};
+export type PublishProductSuccessResponse = {};
+
+export type PublishProductFailedPayload = {
+    reason: string;
+};
+export type PublishProductFailedResponse = {};
+
+export type ProductUnblishedNotifyResponse = {};
 
 export type ArchiveUploadedImageResponse = {};

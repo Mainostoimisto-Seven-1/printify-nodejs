@@ -3,12 +3,12 @@
  * @link https://developers.printify.com/#api-pagination
  */
 export type PaginatedResponse<TData> = {
+    current_page: number;
     data: TData[];
     first_page_url: string;
     prev_page_url: string | null;
     next_page_url: string | null;
     last_page_url: string;
-    current_page: number;
     last_page: number;
     total: number;
     per_page: number;

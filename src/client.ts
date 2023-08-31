@@ -13,16 +13,44 @@ import {
     ArchiveUploadedImageResponse,
     CreateProductPayload,
     CreateProductResponse,
+    DeleteProductResponse,
     GetAllProductsResponse,
     GetProductResponse,
+    ProductUnblishedNotifyResponse,
+    PublishProductFailedPayload,
+    PublishProductFailedResponse,
+    PublishProductPayload,
+    PublishProductResponse,
+    PublishProductSuccessPayload,
+    PublishProductSuccessResponse,
+    UpdateProductPayload,
+    UpdateProductResponse,
 } from "./types/products";
-import { PaginationOptions } from "./types/paginated-response";
+import {
+    PaginatedResponse,
+    PaginationOptions,
+} from "./types/paginated-response";
 import {
     GetUploadedImageResponse,
     GetUploadedImagesResponse,
     UploadImagePayload,
     UploadImageResponse,
 } from "./types/uploads";
+import {
+    Order,
+    OrderStatus,
+    OrderSubmissionProperties,
+    OrderSubmissionResponse,
+    CalculateOrderShippingCostResponse,
+} from "./types/orders";
+import {
+    CreateWebhookPayload,
+    ModifyWebhookPayload,
+    Webhook,
+} from "./types/webhooks";
+
+import crypto from "crypto";
+import { PrintifyEvent } from "./types/events";
 
 export interface PrintifyClientOptions {
     token: string;
@@ -62,7 +90,7 @@ class PrintifyClient {
     }
 
     async callApi<TResponse>(options: {
-        method: "GET" | "POST" | "DELETE";
+        method: "GET" | "POST" | "DELETE" | "PUT";
         path: string;
         headers?: HeadersInit;
         body?: Record<string, unknown>;
@@ -225,7 +253,150 @@ class PrintifyClient {
         return data;
     }
 
-    // TODO: Finish product endpoints integration (https://developers.printify.com/#products)
+    async updateProduct(
+        shopId: number,
+        productId: string,
+        payload: UpdateProductPayload
+    ) {
+        const data = await this.callApi<UpdateProductResponse>({
+            method: "PUT",
+            body: payload,
+            path: `/shops/${shopId}/products/${productId}.json`,
+        });
+        return data;
+    }
+
+    async deleteProduct(shopId: number, productId: string) {
+        const data = await this.callApi<DeleteProductResponse>({
+            method: "DELETE",
+            path: `/shops/${shopId}/products/${productId}.json`,
+        });
+        return data;
+    }
+
+    async publishProduct(
+        shopId: number,
+        productId: string,
+        payload: PublishProductPayload
+    ) {
+        const data = await this.callApi<PublishProductResponse>({
+            method: "POST",
+            body: payload,
+            path: `/shops/${shopId}/products/${productId}/publish.json`,
+        });
+        return data;
+    }
+
+    async publishProductSuccess(
+        shopId: number,
+        productId: string,
+        payload: PublishProductSuccessPayload
+    ) {
+        const data = await this.callApi<PublishProductSuccessResponse>({
+            method: "POST",
+            body: payload,
+            path: `/shops/${shopId}/products/${productId}/publishing_succeeded.json`,
+        });
+        return data;
+    }
+
+    async publishProductFailure(
+        shopId: number,
+        productId: string,
+        payload: PublishProductFailedPayload
+    ) {
+        const data = await this.callApi<PublishProductFailedResponse>({
+            method: "POST",
+            body: payload,
+            path: `/shops/${shopId}/products/${productId}/publishing_failed.json`,
+        });
+        return data;
+    }
+
+    async unpublishProduct(shopId: number, productId: string) {
+        const data = await this.callApi<ProductUnblishedNotifyResponse>({
+            method: "POST",
+            body: {},
+            path: `/shops/${shopId}/products/${productId}/unpublish.json`,
+        });
+        return data;
+    }
+
+    //* Orders
+
+    async getOrders(
+        shopId: number,
+        {
+            pagination,
+            filters,
+        }: {
+            pagination: PaginationOptions;
+            filters?: {
+                sku?: string;
+                status?: OrderStatus;
+            };
+        } = {
+            pagination: { limit: 10, page: 1 },
+        }
+    ) {
+        const data = await this.callApi<PaginatedResponse<Order[]>>({
+            method: "GET",
+            searchParams: {
+                limit: pagination.limit.toString(),
+                page: pagination.page.toString(),
+                ...filters,
+            },
+            path: `/shops/${shopId}/orders.json`,
+        });
+        return data;
+    }
+
+    async getOrder(shopId: number, orderId: string) {
+        const data = await this.callApi<Order>({
+            method: "GET",
+            path: `/shops/${shopId}/orders/${orderId}.json`,
+        });
+        return data;
+    }
+
+    async submitOrder(shopId: number, paylod: OrderSubmissionProperties) {
+        const data = await this.callApi<OrderSubmissionResponse>({
+            method: "POST",
+            body: paylod,
+            path: `/shops/${shopId}/orders/submit.json`,
+        });
+        return data;
+    }
+
+    async sendOrderToProduction(shopId: number, orderId: string) {
+        const data = await this.callApi<Order>({
+            method: "POST",
+            body: {},
+            path: `/shops/${shopId}/orders/${orderId}/send_to_production.json`,
+        });
+        return data;
+    }
+
+    async calculateOrderShippingCost(
+        shopId: number,
+        payload: Pick<OrderSubmissionProperties, "line_items" | "address_to">
+    ) {
+        const data = await this.callApi<CalculateOrderShippingCostResponse>({
+            method: "POST",
+            body: payload,
+            path: `/shops/${shopId}/orders/calculate_shipping_cost.json`,
+        });
+        return data;
+    }
+
+    async cancelOrder(shopId: number, orderId: string) {
+        const data = await this.callApi<Order>({
+            method: "POST",
+            body: {},
+            path: `/shops/${shopId}/orders/${orderId}/cancel.json`,
+        });
+        return data;
+    }
 
     // Uploads
     async getImageUploads(
@@ -266,6 +437,70 @@ class PrintifyClient {
             path: `/uploads/${imageId}/archive.json`,
         });
         return data;
+    }
+
+    //* Webhooks
+
+    async getWebhooks(shopId: number) {
+        const data = await this.callApi<Webhook[]>({
+            method: "GET",
+            path: `/shops/${shopId}/webhooks.json`,
+        });
+        return data;
+    }
+
+    async createWebhook(shopId: number, payload: CreateWebhookPayload) {
+        const data = await this.callApi<Webhook>({
+            method: "POST",
+            body: payload,
+            path: `/shops/${shopId}/webhooks.json`,
+        });
+        return data;
+    }
+
+    async modifyWebhook(
+        shopId: number,
+        webhookId: string,
+        payload: ModifyWebhookPayload
+    ) {
+        const data = await this.callApi<Webhook>({
+            method: "PUT",
+            body: payload,
+            path: `/shops/${shopId}/webhooks/${webhookId}.json`,
+        });
+        return data;
+    }
+
+    async deleteWebhook(shopId: number, webhookId: string) {
+        const data = await this.callApi<{}>({
+            method: "DELETE",
+            path: `/shops/${shopId}/webhooks/${webhookId}.json`,
+        });
+        return data;
+    }
+
+    verifyWebhook(secret: string, signature: string, body: string) {
+        const hmac = crypto.createHmac("sha256", secret);
+        const hash = "sha256=" + hmac.update(body).digest("hex");
+
+        const verified = crypto.timingSafeEqual(
+            Buffer.from(hash),
+            Buffer.from(signature)
+        );
+
+        return verified;
+    }
+
+    decodeEvent(secret: string, signature: string, body: string) {
+        const verified = this.verifyWebhook(secret, signature, body);
+
+        if (!verified) {
+            throw new Error("Invalid signature");
+        }
+
+        const event = JSON.parse(body);
+
+        return event as PrintifyEvent;
     }
 }
 
