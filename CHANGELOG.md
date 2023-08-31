@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 0.4.4
+
+### Patch Changes
+
+- 846fc48: patch product options
+
 ## 0.4.3
 
 ### Patch Changes
