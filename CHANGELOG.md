@@ -1,5 +1,15 @@
 # printify-nodejs
 
+## 2.0.0
+
+### Major Changes
+
+- 40e67e2: changed response type
+
+### Patch Changes
+
+- 40e67e2: updated debug log
+
 ## 1.0.2
 
 ### Patch Changes
