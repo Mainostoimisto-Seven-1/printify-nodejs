@@ -51,7 +51,10 @@ import {
 
 import crypto from "crypto";
 import { PrintifyEvent } from "./types/events";
-import { PrintifyError } from "./errors";
+import {
+    PrintifyError,
+    PrintifyWebhookSignatureVerificationError,
+} from "./errors";
 
 export interface PrintifyClientOptions {
     token: string;
@@ -475,11 +478,15 @@ class PrintifyClient {
         return verified;
     }
 
+    /**
+     *
+     * @throws {PrintifyWebhookSignatureVerificationError}
+     */
     decodeEvent(secret: string, signature: string, body: string) {
         const verified = this.verifyWebhook(secret, signature, body);
 
         if (!verified) {
-            throw new Error("Invalid signature");
+            throw new PrintifyWebhookSignatureVerificationError();
         }
 
         const event = JSON.parse(body);

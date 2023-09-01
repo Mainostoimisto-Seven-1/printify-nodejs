@@ -20,3 +20,10 @@ export class PrintifyError extends Error {
         return error;
     }
 }
+
+export class PrintifyWebhookSignatureVerificationError extends PrintifyError {
+    constructor() {
+        super("Webhook signature verification failed");
+        this.name = "PrintifyWebhookSignatureVerificationError";
+    }
+}
