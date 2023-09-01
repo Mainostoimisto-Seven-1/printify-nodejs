@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 2.0.5
+
+### Patch Changes
+
+- 3cb930f: add throws jsdoc to decodeEvent
+
 ## 2.0.4
 
 ### Patch Changes
