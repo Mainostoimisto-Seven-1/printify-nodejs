@@ -1,4 +1,4 @@
-export type LineItemStatus = "pending" | "cancelled" | "fulfilled";
+export type LineItemStatus = "pending" | "canceled" | "fulfilled";
 
 export interface LineItem {
     readonly product_id?: string;
