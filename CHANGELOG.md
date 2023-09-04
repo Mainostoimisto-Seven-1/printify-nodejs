@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 2.0.6
+
+### Patch Changes
+
+- f302145: fix typo in orders line-item status
+
 ## 2.0.5
 
 ### Patch Changes
