@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 2.0.8
+
+### Patch Changes
+
+- 8ca5e9d: update event typings
+
 ## 2.0.7
 
 ### Patch Changes
