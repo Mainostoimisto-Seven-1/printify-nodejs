@@ -9,8 +9,9 @@ export interface Webhook {
 }
 
 export type CreateWebhookPayload = {
-    topid: EventTypes;
+    topic: EventTypes;
     url: string;
+    secret?: string;
 };
 
 export type ModifyWebhookPayload = {
