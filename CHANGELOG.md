@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 2.0.7
+
+### Patch Changes
+
+- f14e161: fix webhook endpoints
+
 ## 2.0.6
 
 ### Patch Changes
