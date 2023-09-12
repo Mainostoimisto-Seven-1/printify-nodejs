@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 2.0.9
+
+### Patch Changes
+
+- ea547df: update readme
+
 ## 2.0.8
 
 ### Patch Changes
