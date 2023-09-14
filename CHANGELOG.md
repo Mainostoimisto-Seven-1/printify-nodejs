@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 2.0.10
+
+### Patch Changes
+
+- c4f1d2b: remove crypto dependency
+
 ## 2.0.9
 
 ### Patch Changes
