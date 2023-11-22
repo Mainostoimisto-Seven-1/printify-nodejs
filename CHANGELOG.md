@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 2.0.11
+
+### Patch Changes
+
+- 551fa48: fix get print provider response
+
 ## 2.0.10
 
 ### Patch Changes
