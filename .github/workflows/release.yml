@@ -7,6 +7,10 @@ on:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
+env:
+    CI: true
+    PNPM_CACHE_FOLDER: .pnpm-store
+
 jobs:
     release:
         name: Release
@@ -23,12 +27,19 @@ jobs:
             - name: Install Dependencies
               run: npm install
 
+            - name: Setup npmrc
+              run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+
+            - name: setup pnpm config
+              run: pnpm config set store-dir $PNPM_CACHE_FOLDER
+
             - name: Create Release Pull Request or Publish to npm
               id: changesets
               uses: changesets/action@v1
               with:
-                  # This expects you to have a script called release which does a build for your packages and calls changeset publish
-                  publish: npm run release
+                  commit: "chore: update versions"
+                  title: "chore: update versions"
+                  publish: npm run ci:release
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
