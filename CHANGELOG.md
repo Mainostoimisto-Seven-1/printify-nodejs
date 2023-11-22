@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 2.0.12
+
+### Patch Changes
+
+- 2d8444a: update dependencies
+
 ## 2.0.11
 
 ### Patch Changes
