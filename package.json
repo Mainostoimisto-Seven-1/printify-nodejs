@@ -14,7 +14,7 @@
     "license": "ISC",
     "repository": {
         "type": "git",
-        "url": "https://github.com/Mainostoimisto-Seven-1/printify-nodejs.git",
+        "url": "git+https://github.com/Mainostoimisto-Seven-1/printify-nodejs.git",
         "directory": "."
     },
     "bugs": {
