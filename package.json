@@ -27,8 +27,9 @@
     "readme": "README.md",
     "devDependencies": {
         "@changesets/cli": "^2.26.2",
-        "tsup": "^7.2.0",
-        "typescript": "^5.1.6"
+        "changesets": "^1.0.2",
+        "tsup": "^8.0.1",
+        "typescript": "^5.3.2"
     },
     "publishConfig": {
         "access": "public"
