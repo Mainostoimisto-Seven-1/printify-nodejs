@@ -62,17 +62,34 @@ export interface PrintifyClientOptions {
     debug?: boolean;
 }
 
+/**
+ * Client for executing the requests to the Printify API
+ */
 class PrintifyClient {
-    token: string;
-    API_URL: string;
-    debug = false;
+    /**
+     * Printify API Token
+     */
+    private token: string;
+    /**
+     * Printify API URL
+     */
+    private API_URL: string;
+    /**
+     * Toggle for the debug mode of the client.
+     * While true, the client will print debug messages to the console.
+     */
+    private debug = false;
 
-    constructor({ token, version, debug }: PrintifyClientOptions) {
+    constructor(options: PrintifyClientOptions) {
+        const { token, version, debug } = options;
         this.token = token;
         this.API_URL = `${BASE_URL}${version}`;
         this.debug = debug ?? false;
     }
 
+    /**
+     * Method for calling arbitrary api endpoints with the token and error handling.
+     */
     async callApi<TResponse>(options: {
         method: "GET" | "POST" | "DELETE" | "PUT";
         path: string;
@@ -110,6 +127,9 @@ class PrintifyClient {
 
     // Shops
 
+    /**
+     * @link https://developers.printify.com/#retrieve-list-of-shops-in-a-printify-account
+     */
     async getShops() {
         const data = await this.callApi<GetShopsResponse>({
             method: "GET",
@@ -118,6 +138,9 @@ class PrintifyClient {
         return data;
     }
 
+    /**
+     * @link https://developers.printify.com/#disconnect-shop
+     */
     async disconnectShop(shopId: number) {
         const data = await this.callApi<DisconnectShopResponse>({
             method: "DELETE",
@@ -127,6 +150,10 @@ class PrintifyClient {
     }
 
     // Catalog
+
+    /**
+     * @link https://developers.printify.com/#retrieve-a-list-of-available-blueprints
+     */
     async getBlueprints() {
         const data = await this.callApi<GetBlueprintsResponse>({
             method: "GET",
@@ -135,6 +162,9 @@ class PrintifyClient {
         return data;
     }
 
+    /**
+     * @link https://developers.printify.com/#retrieve-a-specific-blueprint
+     */
     async getBlueprintById(blueprintId: number) {
         const data = await this.callApi<GetBlueprintResponse>({
             method: "GET",
@@ -143,6 +173,9 @@ class PrintifyClient {
         return data;
     }
 
+    /**
+     * @link https://developers.printify.com/#retrieve-a-list-of-all-print-providers-that-fulfill-orders-for-a-specific-blueprint
+     */
     async getBlueprintPrintProviders(
         blueprintId: number,
         showOutOfStock: boolean = false
@@ -157,6 +190,9 @@ class PrintifyClient {
         return data;
     }
 
+    /**
+     * @link https://developers.printify.com/#retrieve-a-list-of-variants-of-a-blueprint-from-a-specific-print-provider
+     */
     async getBlueprintPrintProviderVariants(
         blueprintId: number,
         printProviderId: number,
