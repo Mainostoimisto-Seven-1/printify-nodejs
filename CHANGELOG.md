@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 2.0.13
+
+### Patch Changes
+
+- f77aba7: update documentation
+
 ## 2.0.12
 
 ### Patch Changes
