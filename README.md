@@ -1,6 +1,6 @@
 # Printify NodeJS
 
-A brief description of what this project does and who it's for
+A library for calling the Printify API from Node.js written in TypeScript
 
 ## Acknowledgements
 
@@ -29,10 +29,14 @@ const client = new PrintifyClient({
 const shops = await client.getShops();
 ```
 
+## Documentation
+
+Api reference available on [tsdocs.dev](https://tsdocs.dev/docs/printify-nodejs/)
+
 ## Authors
 
 -   [@iWeeti](https://www.github.com/iWeeti)
 
 ## Feedback
 
-If you have any feedback, please reach out to us at veeti.maaninka@seven-1.com
+If you have any feedback, please reach out to us at suosio@suosio.com or in the issues tab.
