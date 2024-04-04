@@ -54,7 +54,10 @@ type Product = {
     updated_at: string;
     visible: boolean;
     is_locked: boolean;
-    is_printify_express_eligible: boolean;
+    is_printify_express_eligible: boolean,
+    is_printify_express_enabled: boolean,
+    is_economy_shipping_eligible: boolean,
+    is_economy_shipping_enabled: boolean,
     blueprint_id: number;
     user_id: number;
     shop_id: number;
