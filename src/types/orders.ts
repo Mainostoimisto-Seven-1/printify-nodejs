@@ -162,4 +162,5 @@ export type CalculateOrderShippingCostResponse = {
     express: number;
     priority: number;
     printify_express: number;
+    economy: number;
 };
