@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 2.0.14
+
+### Patch Changes
+
+- 036027c: Add Economy Shipping Option to Types
+
 ## 2.0.13
 
 ### Patch Changes
