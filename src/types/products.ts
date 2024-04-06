@@ -35,6 +35,7 @@ export interface ProductVariant {
     is_available?: boolean;
     is_printify_express_eligible?: boolean;
     options?: number[];
+    quantity?: number;
 }
 
 type Product = {
