@@ -6,6 +6,7 @@ export type ProductOptionBase = {
 
 export type ColorOption = ProductOptionBase & {
     type: "color";
+    name: string;
     values: {
         id: number;
         title: string;
@@ -15,6 +16,7 @@ export type ColorOption = ProductOptionBase & {
 
 export type BasicOption = ProductOptionBase & {
     type: string;
+    name: string;
     values: {
         id: number;
         title: string;
