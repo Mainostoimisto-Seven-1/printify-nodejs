@@ -1,5 +1,11 @@
 # printify-nodejs
 
+## 2.0.15
+
+### Patch Changes
+
+- c294532: Add quantity to ProductVariant Type with a disclaimer
+
 ## 2.0.14
 
 ### Patch Changes
