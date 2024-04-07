@@ -35,6 +35,10 @@ export interface ProductVariant {
     is_available?: boolean;
     is_printify_express_eligible?: boolean;
     options?: number[];
+    /**
+     * This is not documented on the Printify's official documentation but was found to part of the responses.
+     */
+    quantity?: number;
 }
 
 type Product = {
